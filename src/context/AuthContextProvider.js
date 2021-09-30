@@ -1,4 +1,4 @@
-import React, {useContext, createContext} from 'react'
+import React, {useContext, createContext, useEffect, useState} from 'react'
 import { auth } from '../utils/firebaseUtil';
 
 // Create context for autentication data
@@ -11,6 +11,17 @@ export function useAuth(){
 }
 
 const AuthContextProvider = ({children}) => {
+    const [currentUser, setCurrentUser] = useState();
+    const [loading, setLoading] = useState (true);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            setCurrentUser(user);
+            setLoading(false)
+        })
+        return unsubscribe;
+    }, [])
+
     function singup(email,password) {
         return auth.createUserWithEmailAndPassword(email,password);
     }
@@ -22,7 +33,7 @@ const AuthContextProvider = ({children}) => {
     function logout(){
         auth.signOut();
     }
-    function loginWithGoogle() {
+    function loginWithGoogle(googleProvider) {
         googleProvider.setCustomParameters({ prompt: "select_account" });
         auth.signInWithPopup(googleProvider);
     }
@@ -37,6 +48,7 @@ const AuthContextProvider = ({children}) => {
     }
 
     const values= {
+        currentUser,
         singup,
         login,
         logout,
