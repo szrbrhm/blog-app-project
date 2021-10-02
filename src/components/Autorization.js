@@ -206,9 +206,34 @@ const Autorization = (props) => {
         }}
         validationSchema={ValidationSchema}
         onSubmit={(values, actions) => {
+            if(method === 'Login'){
+                login(values.email, values.password).then(() => {
+                    toastSuccessNotify(`${method} Succesfully performed!`)
+                    history.push("/");
+                    actions.setSubmitting(false)
+                })
+                .catch((error) =>{
+                    toastErrorNotify(error.message);
+                    actions.setSubmitting(false);
+                    actions.resetForm();
+                })
+            }else {
+                signup(values.email, values.password)
+                .then(()=>{
+                    toastSuccessNotify(`${method} Succesfully performed!`)
+                    history.push("/");
+                    actions.setSubmitting(false)
+                })
+                .catch((error) =>{
+                    toastErrorNotify(error.message);
+                    actions.setSubmitting(false);
+                    actions.resetForm();
+                });
+
+            }
 
         }}
-        component={LoginAndRegisterForm}
+        component={(props)=> <LoginAndRegisterForm method={method} {...props}/>}
       ></Formik>
     </div>
   );
