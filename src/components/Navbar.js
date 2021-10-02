@@ -44,7 +44,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const {currentUser} = useAuth();
+  const {currentUser, logout} = useAuth();
 
 
   const handleMenu = (event) => {
@@ -54,6 +54,11 @@ export default function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogOut = () => {
+    setAnchorEl(null);
+    logout();
+  }
 
   return (
     <div className={classes.root}>
@@ -76,7 +81,33 @@ export default function Navbar() {
               >
                 <AccountCircle  style={{fontSize:'40px'}}/>
               </IconButton>
-              {currentUser ?.email? (null) : ( 
+              {currentUser ?.email? (<Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <Link to="/profile" className={classes.linkStyle}>
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                </Link>
+                <Link to="/new-blog" className={classes.linkStyle}>
+                <MenuItem onClick={handleClose}>New Blog</MenuItem> 
+                
+                </Link>
+                <Link to="/login" className={classes.linkStyle}>
+                <MenuItem onClick={handleLogOut}>Logout</MenuItem> 
+                
+                </Link>
+              </Menu>) : ( 
                 <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}
@@ -95,7 +126,7 @@ export default function Navbar() {
                 <Link to="/login" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Login</MenuItem>
                 </Link>
-                <Link to="/login" className={classes.linkStyle}>
+                <Link to="/register" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Register</MenuItem>
                 
                 </Link>
