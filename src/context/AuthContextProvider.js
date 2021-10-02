@@ -59,7 +59,7 @@ const AuthContextProvider = ({children}) => {
     }
     return (
         <AuthContext.Provider value={values}>
-            {children}
+            {!loading && children}
             
         </AuthContext.Provider>
     )

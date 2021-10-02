@@ -44,7 +44,8 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const {currentUser, logout} = useAuth();
+  let {currentUser, logout} = useAuth();
+  const history = useHistory();
 
 
   const handleMenu = (event) => {
@@ -59,16 +60,20 @@ export default function Navbar() {
     setAnchorEl(null);
     logout();
   }
+  const handleDashBoard = () => {
+    setAnchorEl(null);
+    history.push("/");
+  }
 
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleDashBoard}>
             <a href="www.clarusway.com"><img src={CwLogo} alt="" className={classes.logo} /></a>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            <span>{'< Sezer /> BLOG'}</span>
+           <a href="https://github.com/szrbrhm" style={{textDecoration:"none"}}><span>{'< Sezer /> BLOG'}</span></a> 
           </Typography>
           
             <div>
