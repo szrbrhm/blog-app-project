@@ -64,6 +64,10 @@ export default function Navbar() {
     setAnchorEl(null);
     history.push("/");
   }
+  const handleNewBlog = () => {
+    setAnchorEl(null);
+    history.push("/new-blog");
+  }
 
   return (
     <div className={classes.root}>
@@ -105,7 +109,7 @@ export default function Navbar() {
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 </Link>
                 <Link to="/new-blog" className={classes.linkStyle}>
-                <MenuItem onClick={handleClose}>New Blog</MenuItem> 
+                <MenuItem onClick={handleNewBlog}>New Blog</MenuItem> 
                 
                 </Link>
                 <Link to="/login" className={classes.linkStyle}>

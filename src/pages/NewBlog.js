@@ -38,6 +38,7 @@ const NewBlog = () => {
   const {currentUser} = useAuth();
   const {addBlog} = useBlog();
   const history = useHistory();
+  
 
   const handler = (newBlog) => {
     try{
